@@ -1,6 +1,6 @@
 # Image Downloader
 
-This project is a simple rake task to download images from a file containing a list of URLs. The task uses the ImageDownloader service to download the images, and it saves the images in a folder named images in the root directory of the project.
+This project is a simple rake task to download images from a file containing a list of URLs. The task uses the ImageDownloader service to download the images, and it saves the images in a folder passed with rake task in the root directory of the project.
 
 ## Installation
 
@@ -33,7 +33,7 @@ To download the images, you need to provide the path of the file containing the 
 Command to run the rake task, 
 
 ```bash
-rake images:download[/path_to_urls.txt, 2]
+rake images:download[/path_to_urls.txt, batch_size, /path_for_image_folder]
 ```
 
 replace path_to_urls.txt with path of the given text file. The above rake task will download the image inside images folder. 
