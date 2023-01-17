@@ -5,14 +5,15 @@ require "fileutils"
 RSpec.describe Services::ImageDownloader do
   describe ".download" do
     let(:file_path) { File.join(Dir.pwd, "spec", "fixtures", "urls.txt") }
+    let(:batch_size) { 2 }
     let(:image_folder) { File.join(Dir.pwd, "images") }
 
     before(:each) do
-      FileUtils.rm_rf("#{image_folder}/*") if File.directory?(image_folder)
+      FileUtils.rm_rf(Dir["#{image_folder}/*"])  
     end
 
     it "downloads images from file" do
-      Services::ImageDownloader.download(file_path)
+      Services::ImageDownloader.download(file_path, batch_size)
       expect(Dir.entries(image_folder).count).to be > 2
     end
 
@@ -22,7 +23,7 @@ RSpec.describe Services::ImageDownloader do
       end
 
       it "raises an error" do
-        expect { Services::ImageDownloader.download(file_path) }.to raise_error(Errno::ENOENT)
+        expect { Services::ImageDownloader.download(file_path, batch_size) }.to raise_error(Errno::ENOENT)
       end
     end
   end

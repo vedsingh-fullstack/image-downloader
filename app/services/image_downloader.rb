@@ -4,11 +4,15 @@ require "open-uri"
 
 module Services
   class ImageDownloader
-    def self.download(file_path)
-      File.foreach(file_path) do |line|
-        image_urls = line.strip.split
+    def self.download(file_path, batch_size = 10)
+      image_urls = []
 
-        image_urls.each do |url|
+      File.foreach(file_path) do |line|
+        image_urls.concat(line.strip.split)
+      end
+
+      image_urls.each_slice(batch_size) do |batch|
+        batch.each do |url|
           uri = URI(url)
           image = uri.open
 
